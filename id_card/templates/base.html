@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+    <!-- header something later -->
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="two columns sidebar">
+                <img 
+                    src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(user.user_id)) }}"
+                    alt="profile-image" 
+                    class="sidebar-profile"
+                    id="sidebar-profile"
+                    
+                >
+
+                <!-- STUDENT NAVIGATION -->
+                <ul class="sidebar-nav">
+                    <li><a href="{{ url_for('student.index', id=id) }}">PROFILE</a></li>
+                    <hr>
+                    <li><a href="{{ url_for('student.preview_info', id=id) }}">ID INFO</a></li>
+                    <hr>
+                    <li><a href="{{ url_for('student.digital_id', id=id) }}">DIGITAL ID</a></li>
+                    <hr>
+                    <li><a href="{{ url_for('student.card', id=id) }}">CARD</a></li>
+                    <hr>
+                    <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+                </ul>
+                <!-- ---------------------- -->
+
+                <!-- ADMIN NAVIGATION -->
+                <!-- ---------------------- -->
+            </div>
+            <div class="ten columns content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        
+    </div>
+
+    <footer>
+    <!-- footer something later -->
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

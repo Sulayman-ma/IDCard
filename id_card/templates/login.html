@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <title>Login</title>
+</head>
+<body>
+    
+    <div class="container">
+        <h2>Login</h2>
+        <hr>
+    
+        <form method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    
+           <!-- FLASH MESSAGES -->
+            {% for category, msg in get_flashed_messages(with_categories=True) %}
+            <div class="flash">
+                <span class="{{ category }}">{{ msg }}</span>
+            </div>
+            {% endfor %}
+    
+            <div class="row center-this">
+                <div class="column">
+                    <label for="User ID">User ID</label>
+                    <input type="text" name="user_id" required placeholder="User ID">
+                </div>
+            </div>
+            <div class="row center-this">
+                <div class="column">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" required placeholder="Password">
+                </div>
+            </div>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    
+
+</body>
+</html>

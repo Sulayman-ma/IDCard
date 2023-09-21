@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Digital ID{% endblock %}
+
+{% block content %}
+
+    <!-- MAIN CONTENT -->
+    <!-- ONLY ALLOW AUTHENTICATED USERS -->
+
+    <h2 class="center-this">Digital ID Preview</h2>
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <!-- FRONT VIEW -->
+            <div class="six columns">
+                <h3>Face</h3>
+                <div class="id-front">
+                    <svg
+                      class="front-frame"
+                      width="322"
+                      height="520"
+                      viewBox="0 0 322 520"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path opacity="0.8" d="M0 0L321.972 0V519.448H0L0 0Z" fill="#0B0B0B" />
+                    </svg>
+                  
+                    <div class="school-name">Ahmadu Bello University</div>
+                    <div class="location">Zaria-Nigeria</div>
+                    <img class="id-photo" src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(user.user_id)) }}" />
+                    <svg
+                      class="qr"
+                      width="55"
+                      height="55"
+                      viewBox="0 0 55 55"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <path
+                        d="M0.606079 0.773193H54.268V54.4351H0.606079V0.773193Z"
+                        fill="url(#pattern0)"
+                      />
+                      <defs>
+                        <pattern
+                          id="pattern0"
+                          patternContentUnits="objectBoundingBox"
+                          width="1"
+                          height="1"
+                        >
+                          <use xlink:href="#image0_3_6" transform="scale(0.02)" />
+                        </pattern>
+                        <image
+                          id="image0_3_6"
+                          width="50"
+                          height="50"
+                          xlink:href="{{ url_for('static', filename='img/qrs/{}.png'.format(user.user_id)) }}"
+                        />
+                      </defs>
+                    </svg>
+                  
+                    <img class="signature" src="{{ url_for('static', filename='img/signs/{}.jpg'.format(user.user_id)) }}" />
+                    <div class="sign-label">Signature</div>
+                    <div class="qr-label">Verify ID</div>
+                    <div class="id-details">
+                      <div class="detail">
+                        Fullname: {{ user.last_name }} {{ user.first_name }}
+                    </div>
+                      <div class="detail2">
+                        Department: {{ user.department }}
+                      </div>
+                      <div class="detail3">
+                        Course: {{ user.course }}
+                      </div>
+                      <div class="detail4">
+                        DOB: {{ user.dob.strftime("%d/%m/%Y") }}
+                      </div>
+                      <div class="detail5">
+                        State of Origin: {{ user.state_of_origin }}
+                      </div>
+                      <div class="detail6">
+                        Expiry Date: 12/01/2024
+                      </div>
+                      <div class="reg-number">
+                        {{ user.user_id }}
+                      </div>
+                    </div>
+                </div>
+                  
+            </div>
+
+            <!-- BACK VIEW -->
+            <div class="six columns">
+                <h3>Back</h3>
+                <div class="id-back">
+                    <svg
+                      class="back-frame"
+                      width="322"
+                      height="520"
+                      viewBox="0 0 322 520"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path opacity="0.8" d="M0 0L321.972 0V519.448H0L0 0Z" fill="#545454" />
+                    </svg>
+                  
+                    <img class="chief-sign" src="{{ url_for('static', filename='img/sign.png') }}" />
+                    <div class="chief-sign-label">A.g Chief Security Officer</div>
+                    <div class="instructions">
+                      <div class="int">
+                        <span
+                          ><span class="int-span">This </span
+                          ><span class="int-span2"
+                            >card must be in the owner's possession at all times</span
+                          ></span
+                        >
+                      </div>
+                      <div class="int2">
+                        Loss must be reported to the Chief security office or nearest police
+                        station
+                      </div>
+                      <div class="int3">
+                        Any alteration or erasure would render this card invalid
+                      </div>
+                    </div>
+                    <div class="nok-labels">
+                      <div class="nok-label">NEXT OF KIN:</div>
+                      <div class="nok-label2">ADDRESS:</div>
+                      <div class="nok-label3">PHONE NO.:</div>
+                    </div>
+                    <div class="nok-details"></div>
+                    <div class="nok-name">{{ user.nok_fullname }}</div>
+                    <div class="nok-address">{{ user.nok_address }}</div>
+                    <div class="nok-number">{{ user.nok_number }}</div>
+                    <div class="holder-phone-label">HOLDER'S PHONE NO.:</div>
+                    <div class="holder-phone">{{ user.number }}</div>
+                    <img class="abu-name" src="{{ url_for('static', filename='img/abu-name.png') }}" />
+                  </div>
+                  
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
