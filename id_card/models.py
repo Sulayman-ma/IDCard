@@ -26,12 +26,13 @@ class User(db.Model, UserMixin):
     state_of_origin = db.Column(db.String(64))
     blood_group = db.Column(db.String(5))
     dob = db.Column(db.Date)
-    course = db.Column(db.String(64), nullable=False)
-    department = db.Column(db.String(64), nullable=False)
+    course = db.Column(db.String(64))
+    department = db.Column(db.String(64))
     expiry_date = db.Column(db.Date)
-    email = db.Column(db.String(128), nullable=False, unique=True)
+    email = db.Column(db.String(128), unique=True, nullable=False)
     number = db.Column(db.String(64))
     address = db.Column(db.String(128))
+    id_ready = db.Column(db.BOOLEAN, default=False)
 
     # next of kin information
     nok_fullname = db.Column(db.String(128))
@@ -44,11 +45,8 @@ class User(db.Model, UserMixin):
     : ADMIN
     """
     role = db.Column(db.String(64), nullable=False)
+    # set to False when student graduates or leaves the school for any reason
     is_active = db.Column(db.BOOLEAN, default=True)
-    
-
-    """RELATIONSHIPS"""
-
 
     """PASSWORD METHODS AND VERIFICATION"""
     @property
@@ -65,21 +63,64 @@ class User(db.Model, UserMixin):
 
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
-        token = generate_password_hash(self.user_id)
-        data = url_for('student.verify', id=self.id, token=token, _external=True)
-        qr = qrcode.make(
-            data=data,
-            box_size=2,
-            border=2
-        )
-        qr.save('./id_card/static/img/qrs/{}.jpg'.format(self.user_id))
+
+        # generate live Render URL with token as QR data
+        # token = generate_password_hash(self.user_id)
+        # data = '{}/{}/{}'.format('https://idcard.onrender.com', self.id, token)
+
+        # qr = qrcode.make(
+        #     data=data,
+        #     box_size=2,
+        #     border=2
+        # )
+        # qr.save('./id_card/static/img/qrs/{}.jpg'.format(self.user_id))
 
     def __repr__(self) -> str:
         return '<{} - {}>'.format(self.role, self.user_id)
 
     """STATIC AND CLASS METHODS"""
-    def generate_verify_token(self):
-        pass
+    def check_id_ready(self) -> dict:
+        """Checks if the student ID is ready by querying against the necessary fields that are to appear on the ID card. Including the ID picture and the signature.
+        
+        Keyword arguments:
+        self -- instance reference
+        Return: Dictionary
+        """
+        req_fields = {
+            'First Name': self.first_name, 
+            'Last Name': self.last_name, 
+            'Gender': self.gender,
+            'Date of Birth': self.dob, 
+            'Phone Number': self.number, 
+            'Next of Kin Fullname':self.nok_fullname, 
+            'Next of Kin Address':self.nok_address, 
+            'Next of Kind Phone No.':self.nok_number
+        }
+        response = {'status': True, 'fields':[]}
+        for k, v in req_fields.items():
+            if v is None or v == '':
+                response['fields'].append(k)
+        if len(response['fields']) > 0:
+            response['status'] = False
+        id_exists = False
+        sign_exists = False
+        # querying for ID and signature
+        for _, _, files in os.walk(os.path.join(current_app.config['PROFILE_FOLDER'])):
+            for file in files:
+                if file.startswith(self.user_id):
+                    id_exists = True
+                    break
+        for _, _, files in os.walk(os.path.join(current_app.config['SIGN_FOLDER'])):
+            for file in files:
+                if file.startswith(self.user_id):
+                    sign_exists = True
+                    break
+        if not id_exists:
+            response['fields'].append('Profile Picture')
+        if not sign_exists:
+            response['fields'].append('Signature')
+        return response
+        
 
     def generate_users(number: int) -> None:
         """Generates fake students to populate the database with, with all names included, email and every other detail. Custom fields are added using custom dynamic providers.
@@ -141,7 +182,8 @@ class User(db.Model, UserMixin):
                 'Sokoto',
                 'Taraba',
                 'Yobe',
-                'Zamfara'
+                'Zamfara',
+                'F.C.T. Abuja'
             ]
         )
         reg_prefix = DynamicProvider(
@@ -166,7 +208,7 @@ class User(db.Model, UserMixin):
                 first_name = faker.first_name(),
                 middle_name = faker.first_name(),
                 last_name = faker.last_name(),
-                number = '0{}'.format(faker.msisdn()[:10]),
+                number = '080{}'.format(faker.msisdn()[:8]),
                 blood_group = faker.profile()['blood_group'],
                 gender = faker.profile()['sex'],
                 email = faker.email(),
@@ -180,7 +222,7 @@ class User(db.Model, UserMixin):
                 # next of kin stuff
                 nok_fullname = faker.name(),
                 nok_address = faker.address(),
-                nok_number = '0{}'.format(faker.msisdn()),
+                nok_number = '070{}'.format(faker.msisdn()[:8]),
                 role = 'STUDENT',
                 password = 'pass'
             )

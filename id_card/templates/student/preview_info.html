@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}ID Info{% endblock %}
+
+{% block content %}
+
+    <!-- MAIN CONTENT -->
+    <!-- ONLY ALLOW AUTHENTICATED USERS -->
+
+    <h2>Preview Info</h2>
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            {% if fields == [] %}
+            <h6 class="success">All required information has been filled</h6>
+            <a class="button success" href="{{ url_for('.digital_id', id=current_user.id) }}">Digital ID</a>
+            {% else %}
+            <h6 class="warning">Please update the following fields in your profile.</h6>
+            <ul>
+                {% for field in fields %}
+                <li class="warning">{{ field }}</li>
+                {% endfor %}
+            </ul>
+            <a class="button misc" href="{{ url_for('.index', id=current_user.id) }}">Profile</a>
+            {% endif %}
+        </div>
+    </div>
+    
+{% endblock %}

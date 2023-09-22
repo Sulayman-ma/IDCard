@@ -22,7 +22,7 @@ app = create_app(Config)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        user_id = request.form.get('user_id').upper()
+        user_id = request.form.get('user_id')
         password = request.form.get('password')
         user = User.query.filter_by(user_id=user_id).first()
         if user is not None and user.check_password(password):

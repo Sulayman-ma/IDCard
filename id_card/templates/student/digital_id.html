@@ -29,7 +29,7 @@
                   
                     <div class="school-name">Ahmadu Bello University</div>
                     <div class="location">Zaria-Nigeria</div>
-                    <img class="id-photo" src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(user.user_id)) }}" />
+                    <img class="id-photo" src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(current_user.user_id)) }}" />
                     <svg
                       class="qr"
                       width="55"
@@ -56,35 +56,35 @@
                           id="image0_3_6"
                           width="50"
                           height="50"
-                          xlink:href="{{ url_for('static', filename='img/qrs/{}.png'.format(user.user_id)) }}"
+                          xlink:href="{{ url_for('static', filename='img/qrs/{}.jpg'.format(current_user.user_id)) }}"
                         />
                       </defs>
                     </svg>
                   
-                    <img class="signature" src="{{ url_for('static', filename='img/signs/{}.jpg'.format(user.user_id)) }}" />
+                    <img class="signature" src="{{ url_for('static', filename='img/signs/{}.jpg'.format(current_user.user_id)) }}" />
                     <div class="sign-label">Signature</div>
                     <div class="qr-label">Verify ID</div>
                     <div class="id-details">
                       <div class="detail">
-                        Fullname: {{ user.last_name }} {{ user.first_name }}
+                        Fullname: {{ current_user.last_name }} {{ current_user.first_name }}
                     </div>
                       <div class="detail2">
-                        Department: {{ user.department }}
+                        Department: {{ current_user.department }}
                       </div>
                       <div class="detail3">
-                        Course: {{ user.course }}
+                        Course: {{ current_user.course }}
                       </div>
                       <div class="detail4">
-                        DOB: {{ user.dob.strftime("%d/%m/%Y") }}
+                        DOB: {{ current_user.dob.strftime("%d/%m/%Y") }}
                       </div>
                       <div class="detail5">
-                        State of Origin: {{ user.state_of_origin }}
+                        State of Origin: {{ current_user.state_of_origin }}
                       </div>
                       <div class="detail6">
                         Expiry Date: 12/01/2024
                       </div>
                       <div class="reg-number">
-                        {{ user.user_id }}
+                        {{ current_user.user_id }}
                       </div>
                     </div>
                 </div>
@@ -131,11 +131,11 @@
                       <div class="nok-label3">PHONE NO.:</div>
                     </div>
                     <div class="nok-details"></div>
-                    <div class="nok-name">{{ user.nok_fullname }}</div>
-                    <div class="nok-address">{{ user.nok_address }}</div>
-                    <div class="nok-number">{{ user.nok_number }}</div>
+                    <div class="nok-name">{{ current_user.nok_fullname }}</div>
+                    <div class="nok-address">{{ current_user.nok_address }}</div>
+                    <div class="nok-number">{{ current_user.nok_number }}</div>
                     <div class="holder-phone-label">HOLDER'S PHONE NO.:</div>
-                    <div class="holder-phone">{{ user.number }}</div>
+                    <div class="holder-phone">{{ current_user.number }}</div>
                     <img class="abu-name" src="{{ url_for('static', filename='img/abu-name.png') }}" />
                   </div>
                   

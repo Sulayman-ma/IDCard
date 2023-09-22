@@ -2,34 +2,29 @@ from flask_wtf import FlaskForm
 from wtforms.fields import (
     StringField,
     SelectField,
-    FileField,
     EmailField,
     TelField,
     SubmitField,
-    DateField
+    DateField,
+    BooleanField
 )
 from wtforms.validators import Email
 
 
 
-class Registration(FlaskForm):
-    photo = FileField(label='Upload Profile Picture')
-    signature = FileField(label='Upload signature')
+class EditStudent(FlaskForm):
     user_id = StringField(label="Registration Number", render_kw={
         'placeholder': 'Registration Number',
         'readonly': 'readonly'
     })
     first_name = StringField(label="First Name", render_kw={
-        'placeholder': 'First Name',
-        'readonly': 'readonly'
+        'placeholder': 'First Name'
     })
     middle_name = StringField(label="Middle Name", render_kw={
-        'placeholder': 'Middle Name',
-        'readonly': 'readonly'
+        'placeholder': 'Middle Name'
     })
     last_name = StringField(label="Last Name", render_kw={
-        'placeholder': 'Last Name',
-        'readonly': 'readonly'
+        'placeholder': 'Last Name'
     })
     email = EmailField(label="E-mail", render_kw={
         'placeholder': 'Email'
@@ -80,15 +75,5 @@ class Registration(FlaskForm):
         'F.C.T. Abuja'
     ])
     dob = DateField(label='Date of Birth')
-
-    # next of kin information
-    nok_fullname = StringField(label='Next of Kin', render_kw={
-        'placeholder': 'Fullname'
-    })
-    nok_address = StringField(label='Address', render_kw={
-        'placeholder': 'Address'
-    })
-    nok_number = TelField(label='Contact Phone', render_kw={
-        'placeholder': 'Phone Number'
-    })
+    is_active = BooleanField()
     save = SubmitField(label='Save Changes')

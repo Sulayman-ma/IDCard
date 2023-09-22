@@ -15,30 +15,44 @@
     <div class="container">
         <div class="row">
             <div class="two columns sidebar">
+                {%  if current_user.is_authenticated %}
+
+                <!-- STUDENT NAVIGATION -->
+                {% if current_user.role == 'STUDENT' %}
                 <img 
-                    src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(user.user_id)) }}"
+                    src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(current_user.user_id)) }}"
                     alt="profile-image" 
                     class="sidebar-profile"
                     id="sidebar-profile"
                     
                 >
-
-                <!-- STUDENT NAVIGATION -->
                 <ul class="sidebar-nav">
-                    <li><a href="{{ url_for('student.index', id=id) }}">PROFILE</a></li>
+                    <li><a href="{{ url_for('student.index', id=current_user.id) }}">PROFILE</a></li>
                     <hr>
-                    <li><a href="{{ url_for('student.preview_info', id=id) }}">ID INFO</a></li>
+                    <li><a href="{{ url_for('student.preview_info', id=current_user.id) }}">PREVIEW INFO</a></li>
                     <hr>
-                    <li><a href="{{ url_for('student.digital_id', id=id) }}">DIGITAL ID</a></li>
+                    <li><a href="{{ url_for('student.digital_id', id=current_user.id) }}">DIGITAL ID</a></li>
                     <hr>
-                    <li><a href="{{ url_for('student.card', id=id) }}">CARD</a></li>
-                    <hr>
+                    <!-- remove this upon completion -->
+                    <!-- <li><a href="{{ url_for('student.card', id=current_user.id) }}">CARD</a></li>
+                    <hr> -->
                     <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
                 </ul>
                 <!-- ---------------------- -->
 
                 <!-- ADMIN NAVIGATION -->
+                {% else %}
+                <ul class="sidebar-nav">
+                    <li><a href="{{ url_for('admin.index', id=current_user.id) }}">DASH</a></li>
+                    <hr>
+                    <li><a href="{{ url_for('admin.students', id=current_user.id) }}">STUDENTS</a></li>
+                    <hr>
+                    <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+                </ul>
                 <!-- ---------------------- -->
+                {% endif %}
+
+                {% endif %}
             </div>
             <div class="ten columns content">
                 {% block content %}{% endblock %}
