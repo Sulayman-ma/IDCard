@@ -52,10 +52,10 @@ def index(id):
                 photo = photo.convert(mode='RGB')
                 photo = photo.resize(size=(200, 200))
                 photo_filename = '{}.jpg'.format(user.user_id)
-                photo.save(os.path.join(current_app.config['PROFILE_FOLDER'], photo_filename))
+                photo.save('./id_card/static/img/profiles/{}.jpg'.format(user.user_id))
             if sign.filename != '':
                 sign_filename = '{}.jpg'.format(user.user_id)
-                sign.save(os.path.join(current_app.config['SIGN_FOLDER'], sign_filename))
+                sign.save('./id_card/static/img/signs/{}.jpg'.format(user.user_id))
             db.session.commit()
             flash('Update Successful', 'info')
             return redirect(url_for('.index', id=id))
