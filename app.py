@@ -19,6 +19,11 @@ from datetime import timedelta
 
 app = create_app(Config)
 
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
