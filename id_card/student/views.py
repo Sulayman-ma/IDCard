@@ -15,6 +15,7 @@ from flask_login import login_required
 import os
 import qrcode
 from PIL import Image
+from datetime import datetime
 
 
 
@@ -77,21 +78,8 @@ def preview_info(id):
     """
     user = User.query.get(id)
     # ensuring necessary fields are filled
-    # req_fields = {
-    #     'First Name': user.first_name, 
-    #     'Last Name': user.last_name, 
-    #     'Gender': user.gender,
-    #     'Date of Birth': user.dob, 
-    #     'Phone Number': user.number, 
-    #     'Next of Kin Fullname':user.nok_fullname, 
-    #     'Next of Kin Address':user.nok_address, 
-    #     'Next of Kind Phone No.':user.nok_number
-    # }
-    # fields = []
-    # for k, v in req_fields.items():
-    #     if v is None or v == '':
-    #         fields.append(k)
-    response = user.check_id_ready()
+
+    response = user.check_id_status()
     # checking if QR code was generated
     qr_exists = False
     for _, _, files in os.walk('./id_card/static/img/qrs'):
@@ -105,8 +93,8 @@ def preview_info(id):
         data = '{}/{}'.format('https://idcard.onrender.com/verify_id', user.id)
         qr = qrcode.make(
             data=data,
-            box_size=2,
-            border=2
+            box_size=5,
+            border=5
         )
         qr.save('./id_card/static/img/qrs/{}.jpg'.format(user.user_id))
     return render_template('student/preview_info.html', fields=response['fields'])
@@ -127,7 +115,8 @@ def verify_id(id):
 @student.route('/card/<int:id>')
 def card(id):
     user = User.query.get(id)
-    return render_template('student/card.html', user=user)
+    today = datetime.today().date()
+    return render_template('student/card.html', user=user, today=today)
 
 
 @student.route('/digital_id/<int:id>')

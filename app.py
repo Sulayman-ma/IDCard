@@ -26,8 +26,10 @@ def login():
         password = request.form.get('password')
         user = User.query.filter_by(user_id=user_id).first()
         if user is not None and user.check_password(password):
-            # with remember me token for 1 day
-            login_user(user, duration=timedelta(days=1))
+            if not user.is_active:
+                flash('User is inactive, contact an admin', 'warning')
+                return redirect(url_for('login'))
+            login_user(user, request.form.get('remember_me'))
             endpoint = '{}.index'.format(user.role.lower())
             next = url_for(endpoint, id=user.id)
             return redirect(next)
@@ -40,6 +42,19 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+# @app.before_request
+# @login_required
+# def before_request():
+#     """A before app request handler for refreshing all ID statuses"""
+#     users = User.query.filter_by(role='STUDENT')
+#     for user in users:
+#         response = user.check_id_status()
+#         if response.get('status') is True:
+#             user.id_ready = True
+#         user.refresh_status()
+#     db.session.commit()
 
 
 @app.shell_context_processor

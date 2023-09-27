@@ -5,40 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/figma.css') }}">
     <title>Login</title>
 </head>
 <body>
-    
-    <div class="container">
-        <h2>Login</h2>
-        <hr>
-    
-        <form method="post">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-    
-           <!-- FLASH MESSAGES -->
-            {% for category, msg in get_flashed_messages(with_categories=True) %}
-            <div class="flash">
-                <span class="{{ category }}">{{ msg }}</span>
-            </div>
-            {% endfor %}
-    
-            <div class="row center-this">
-                <div class="column">
-                    <label for="User ID">User ID</label>
-                    <input type="text" name="user_id" required placeholder="User ID">
-                </div>
-            </div>
-            <div class="row center-this">
-                <div class="column">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" required placeholder="Password">
-                </div>
-            </div>
-            <input type="submit" value="Login">
-        </form>
-    </div>
-    
+  
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
+        <div class="login">
+            <div class="left-panel six columns">
+                <h2 class="hello">Hello,</h2>
+                <h2 class="welcome">welcome!</h2>
+
+                <!-- FLASH MESSAGES -->
+                {% for category, msg in get_flashed_messages(with_categories=True) %}
+                <div class="login-flash">
+                    <span class="{{ category }}">{{ msg }}</span>
+                </div>
+                {% endfor %}
+
+                <div class="login-form">
+                    <div class="group">
+                        <input type="text" name="user_id" class="input" placeholder="User ID">
+                    </div>
+                    <div class="group">
+                        <input type="password" name="password" class="input" placeholder="Password">
+                    </div>
+                    <label for="remember_me">
+                        <input type="checkbox" name="remember_me" id="remember-me">
+                        <span>Remember me</span>
+                    </label>
+                    <div class="group">
+                        <input type="submit" value="LOGIN" class="button-primary">
+                    </div>
+                </div>
+            </div>
+            <div class="right-panel six columns">
+                <div class="ellipse-1"></div>
+                <div class="ellipse-3"></div>
+                <div class="ellipse-2"></div>
+                <div class="ellipse-4"></div>
+            </div>
+        </div>    
+    </form>
 </body>
 </html>

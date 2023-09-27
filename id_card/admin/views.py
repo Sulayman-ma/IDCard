@@ -53,7 +53,7 @@ def refresh():
     """
     users = User.query.filter_by(role='STUDENT')
     for user in users:
-        response = user.check_id_ready()
+        response = user.check_id_status()
         if response.get('status') is True:
             user.id_ready = True
     db.session.commit()
@@ -77,7 +77,13 @@ def edit_student(id):
             user.dob = form.dob.data
             user.state_of_origin = form.state_of_origin.data
             user.address = form.address.data
-            user.is_active = form.is_active.data
+            user.rusticated = form.rusticated.data
+            # if student is rusticated, deactivate them
+            if form.rusticated.data:
+                user.is_active = False
+            # otherwise apply the active status as needed
+            else:
+                user.is_active = form.is_active.data
             db.session.commit()
             flash('Changes applied', 'success')
             return redirect(url_for('.students'))

@@ -74,6 +74,7 @@ class EditStudent(FlaskForm):
         'Zamfara',
         'F.C.T. Abuja'
     ])
+    rusticated = BooleanField()
     dob = DateField(label='Date of Birth')
     is_active = BooleanField()
     save = SubmitField(label='Save Changes')

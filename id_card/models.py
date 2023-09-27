@@ -33,6 +33,7 @@ class User(db.Model, UserMixin):
     number = db.Column(db.String(64))
     address = db.Column(db.String(128))
     id_ready = db.Column(db.BOOLEAN, default=False)
+    rusticated = db.Column(db.BOOLEAN, default=False)
 
     # next of kin information
     nok_fullname = db.Column(db.String(128))
@@ -79,7 +80,7 @@ class User(db.Model, UserMixin):
         return '<{} - {}>'.format(self.role, self.user_id)
 
     """STATIC AND CLASS METHODS"""
-    def check_id_ready(self) -> dict:
+    def check_id_status(self) -> dict:
         """Checks if the student ID is ready by querying against the necessary fields that are to appear on the ID card. Including the ID picture and the signature.
         
         Keyword arguments:
@@ -121,6 +122,20 @@ class User(db.Model, UserMixin):
             response['fields'].append('Signature')
         return response
         
+
+    # def refresh_status(self) -> None:
+    #     """Refresh student's ID status by checking expiry date.
+        
+    #     Keyword arguments:
+    #     self -- class instance
+    #     Return: None
+    #     """
+    #     date = datetime.today().date()
+    #     # if ID has expired
+    #     if date <= self.expiry_date:
+    #         self.id_status = 'EXPIRED'
+    #     db.session.commit()
+
 
     def generate_users(number: int) -> None:
         """Generates fake students to populate the database with, with all names included, email and every other detail. Custom fields are added using custom dynamic providers.
