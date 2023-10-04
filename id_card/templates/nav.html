@@ -1,0 +1,40 @@
+{% if current_user.role == 'STUDENT' %}
+<div class="pure-menu">
+    <span class="pure-menu-heading">
+        <img class="pure-img-responsive" src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(current_user.user_id)) }}">
+    </span>
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{{ url_for('student.index', id=current_user.id) }}">PROFILE</a>
+        </li>
+        <hr>
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{{ url_for('student.preview_info', id=current_user.id) }}">PREVIEW INFO</a>
+        </li>
+        <hr>
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{{ url_for('student.digital_id', id=current_user.id) }}">DIGITAL ID</a>
+        </li>
+        <hr>
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{{ url_for('logout') }}">LOGOUT</a>
+        </li>
+    </ul>
+</div>
+{% else %}
+<div class="pure-menu">
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{{ url_for('admin.index') }}">DASH</a>
+        </li>
+        <hr>
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{{ url_for('admin.students') }}">STUDENTS</a>
+        </li>
+        <hr>
+        <li class="pure-menu-item">
+            <a class="pure-menu-link" href="{{ url_for('logout') }}">LOGOUT</a>
+        </li>
+    </ul>
+</div>
+{% endif %}

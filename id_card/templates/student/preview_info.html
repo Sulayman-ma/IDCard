@@ -4,13 +4,12 @@
 
 {% block content %}
 
-    <!-- MAIN CONTENT -->
-    <!-- ONLY ALLOW AUTHENTICATED USERS -->
+<div id="main">
+    <div class="header">
+        <h1>Preview Info</h1>
+    </div>
 
-    <h2>Preview Info</h2>
-    <hr>
-
-    <div class="container">
+    <div class="content">
         <div class="row">
             {% if fields == [] %}
             <h6 class="success">All required information has been filled</h6>
@@ -26,5 +25,6 @@
             {% endif %}
         </div>
     </div>
-    
+</div>
+
 {% endblock %}

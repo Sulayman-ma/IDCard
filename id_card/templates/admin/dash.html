@@ -4,20 +4,20 @@
 
 {% block content %}
 
-<div class="container">
-    <!-- FLASH MESSAGES -->
-    {% for category, msg in get_flashed_messages(with_categories=True) %}
-    <div class="flash">
-        <span class="{{ category }}">{{ msg }}</span>
-    </div>
-    {% endfor %}
-
+<div id="main">
     <!-- MAIN CONTENT -->
-    <h3>Admin Dashboard</h3>
-    <hr>
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+    </div>
 
-    <div class="row">
-        <table class="u-full-width">
+    <div class="content">
+        <!-- FLASH MESSAGES -->
+        {% for category, msg in get_flashed_messages(with_categories=True) %}
+        <div class="flash">
+            <span class="{{ category }}">{{ msg }}</span>
+        </div>
+        {% endfor %}
+        <table class="custom-table">
             <thead>
                 <tr>
                     <th>Department</th>

@@ -40,8 +40,10 @@ def students():
 @admin.route('/admin/students/<dep>')
 @login_required
 def filtered_students(dep):
+    all = User.query.filter_by(role='STUDENT')
+    deps = {user.department for user in all}
     students = User.query.filter_by(department=dep).order_by(User.user_id)
-    return render_template('admin/students_by_dep.html', students=students)
+    return render_template('admin/students_by_dep.html', students=students, deps=deps)
 
 
 @admin.route('/admin/refresh')
@@ -66,28 +68,25 @@ def edit_student(id):
     user = User.query.get(id)
     form = EditStudent(obj=user)
     if form.is_submitted():
-        try:
-            # personal info update
-            user.first_name = form.first_name.data
-            user.middle_name = form.middle_name.data
-            user.last_name = form.last_name.data
-            user.user_id = form.user_id.data
-            user.email = form.email.data
-            user.number = form.number.data
-            user.dob = form.dob.data
-            user.state_of_origin = form.state_of_origin.data
-            user.address = form.address.data
-            user.rusticated = form.rusticated.data
-            # if student is rusticated, deactivate them
-            if form.rusticated.data:
-                user.is_active = False
-            # otherwise apply the active status as needed
-            else:
-                user.is_active = form.is_active.data
-            db.session.commit()
-            flash('Changes applied', 'success')
-            return redirect(url_for('.students'))
-        except:
-            flash('Error. Check inputs and try again.', 'warning')
-            return redirect(url_for('.edit_student', id=id))
-    return render_template('admin/edit_student.html', form=form)
+        # try:
+        # personal info update
+        user.first_name = form.first_name.data
+        user.middle_name = form.middle_name.data
+        user.last_name = form.last_name.data
+        user.user_id = form.user_id.data
+        user.email = form.email.data
+        user.number = form.number.data
+        user.dob = form.dob.data
+        user.state_of_origin = form.state_of_origin.data
+        user.address = form.address.data
+        # user active or rusticated
+        user.is_active = form.is_active.data
+        user.rusticated = form.rusticated.data
+        user.is_active = False
+        db.session.commit()
+        flash('Changes applied', 'success')
+        return redirect(url_for('.students'))
+        # except:
+        #     flash('Error. Check inputs and try again.', 'warning')
+        #     return redirect(url_for('.edit_student', id=id))
+    return render_template('admin/edit_student.html', form=form, user=user)

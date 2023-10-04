@@ -6,48 +6,54 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/figma.css') }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/base-min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
     <title>Login</title>
 </head>
 <body>
-  
-    <form method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-
-        <div class="login">
-            <div class="left-panel six columns">
-                <h2 class="hello">Hello,</h2>
-                <h2 class="welcome">welcome!</h2>
-
-                <!-- FLASH MESSAGES -->
-                {% for category, msg in get_flashed_messages(with_categories=True) %}
-                <div class="login-flash">
-                    <span class="{{ category }}">{{ msg }}</span>
-                </div>
-                {% endfor %}
-
-                <div class="login-form">
-                    <div class="group">
-                        <input type="text" name="user_id" class="input" placeholder="User ID">
+    <form method="post" class="login-parent">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> 
+        <div class="pure-g">
+            <div class="pure-u-1 pure-u-lg-1-2">
+                <div class="left-panel">
+                    <h2 class="hello">Hello,</h2>
+                    <h2 class="welcome">welcome!</h2>
+                    <!-- FLASH MESSAGES -->
+                    {% for category, msg in get_flashed_messages(with_categories=True) %}
+                    <div class="login-flash">
+                        <span class="{{ category }}">{{ msg }}</span>
                     </div>
-                    <div class="group">
-                        <input type="password" name="password" class="input" placeholder="Password">
-                    </div>
-                    <label for="remember_me">
-                        <input type="checkbox" name="remember_me" id="remember-me">
-                        <span>Remember me</span>
-                    </label>
-                    <div class="group">
-                        <input type="submit" value="LOGIN" class="button-primary">
+                    {% endfor %}
+    
+                    <div class="login-form">
+                        <div class="group">
+                            <input required type="text" name="user_id" class="input" placeholder="User ID">
+                        </div>
+                        <div class="group">
+                            <input required type="password" name="password" class="input" placeholder="Password">
+                        </div>
+                        <label>
+                            <input type="checkbox" name="remember_me" id="remember-me">
+                            Remember me
+                        </label>
+                        <div class="group">
+                            <input type="submit" value="LOGIN" class="button-primary">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="right-panel six columns">
-                <div class="ellipse-1"></div>
-                <div class="ellipse-3"></div>
-                <div class="ellipse-2"></div>
-                <div class="ellipse-4"></div>
+            <div class="pure-u-1 pure-u-lg-1-2">
+                <div class="right-panel">
+                    <!-- top right ellipse -->
+                    <div class="ellipse-1"></div>
+                    <div class="ellipse-3"></div>
+                    <div class="ellipse-2"></div>
+                    <div class="ellipse-4"></div>
+                </div>
             </div>
-        </div>    
+        </div>
     </form>
 </body>
 </html>

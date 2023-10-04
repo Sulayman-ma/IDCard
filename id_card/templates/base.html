@@ -4,67 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pure-custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/id-style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/base-min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <header>
-    <!-- header something later -->
-    </header>
-
-    <div class="container">
-        <div class="row">
-            <div class="two columns sidebar">
-                {%  if current_user.is_authenticated %}
-
-                <!-- STUDENT NAVIGATION -->
-                {% if current_user.role == 'STUDENT' %}
-                <img 
-                    src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(current_user.user_id)) }}"
-                    alt="profile-image" 
-                    class="sidebar-profile"
-                    id="sidebar-profile"
-                    
-                >
-                <ul class="sidebar-nav">
-                    <li><a href="{{ url_for('student.index', id=current_user.id) }}">PROFILE</a></li>
-                    <hr>
-                    <li><a href="{{ url_for('student.preview_info', id=current_user.id) }}">PREVIEW INFO</a></li>
-                    <hr>
-                    <li><a href="{{ url_for('student.digital_id', id=current_user.id) }}">DIGITAL ID</a></li>
-                    <hr>
-                    <!-- remove this upon completion -->
-                    <!-- <li><a href="{{ url_for('student.card', id=current_user.id) }}">CARD</a></li>
-                    <hr> -->
-                    <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
-                </ul>
-                <!-- ---------------------- -->
-
-                <!-- ADMIN NAVIGATION -->
-                {% else %}
-                <ul class="sidebar-nav">
-                    <li><a href="{{ url_for('admin.index', id=current_user.id) }}">DASH</a></li>
-                    <hr>
-                    <li><a href="{{ url_for('admin.students', id=current_user.id) }}">STUDENTS</a></li>
-                    <hr>
-                    <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
-                </ul>
-                <!-- ---------------------- -->
-                {% endif %}
-
-                {% endif %}
-            </div>
-            <div class="ten columns content">
-                {% block content %}{% endblock %}
-            </div>
+    
+    <!-- MAIN PARENT DIV -->
+    <div id="layout">
+        <a href="#menu" id="menuLink" class="menu-link">
+            <!-- Hamburger icon -->
+            <span></span>
+        </a>
+        <!-- Side Menu -->
+        <div id="menu">
+            {% include 'nav.html' %}
         </div>
-        
+
+        <!-- Main Content -->
+        {% block content %}
+        {% endblock %}
     </div>
 
-    <footer>
-    <!-- footer something later -->
-    </footer>
-
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
 </body>
 </html>

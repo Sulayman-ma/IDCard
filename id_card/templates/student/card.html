@@ -4,96 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/id-style.css') }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/base-min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
 </head>
 <body>
+    <div id="layout">
+        <div class="card-header header">
+            {% if user.rusticated %}
+            <h1 class="center-this error">Student Rusticated</h1>
+            {% elif today <= user.expiry_date %}
+            <h1 class="center-this warning">ID Expired</h1>
+            {% else %}
+            <h1 class="center-this success">ID Valid</h1>
+            {% endif %}
+        </div>
 
-    <div class="container">
-        {% if user.rusticated %}
-        <h2 class="center-this error">Student Rusticated</h2>
-        {% elif today <= user.expiry_date %}
-        <h2 class="center-this warning">ID Expired</h2>
-        {% else %}
-        <h2 class="center-this success">ID Valid</h2>
-        {% endif %}
-        <hr>
-        <div class="row center-this">
-            <div class="id-front">
-                <svg
-                    class="front-frame"
-                    width="322"
-                    height="520"
-                    viewBox="0 0 322 520"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path opacity="0.8" d="M0 0L321.972 0V519.448H0L0 0Z" fill="#0B0B0B" />
-                </svg>
-                
-                <div class="school-name">Ahmadu Bello University</div>
-                <div class="location">Zaria-Nigeria</div>
-                <img class="id-photo" src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(user.user_id)) }}" />
-                <svg
-                    class="qr"
-                    width="55"
-                    height="55"
-                    viewBox="0 0 55 55"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                    <path
-                    d="M0.606079 0.773193H54.268V54.4351H0.606079V0.773193Z"
-                    fill="url(#pattern0)"
-                    />
-                    <defs>
-                    <pattern
-                        id="pattern0"
-                        patternContentUnits="objectBoundingBox"
-                        width="1"
-                        height="1"
-                    >
-                        <use xlink:href="#image0_3_6" transform="scale(0.02)" />
-                    </pattern>
-                    <image
-                        id="image0_3_6"
-                        width="50"
-                        height="50"
-                        xlink:href="{{ url_for('static', filename='img/qrs/{}.jpg'.format(user.user_id)) }}"
-                    />
-                    </defs>
-                </svg>
-                
-                <img class="signature" src="{{ url_for('static', filename='img/signs/{}.jpg'.format(user.user_id)) }}" />
-                <div class="sign-label">Signature</div>
-                <div class="qr-label">Verify ID</div>
-                <div class="id-details">
-                    <div class="detail">
-                    Fullname: {{ user.last_name }} {{ user.first_name }}
-                </div>
-                    <div class="detail2">
-                    Department: {{ user.department }}
-                    </div>
-                    <div class="detail3">
-                    Course: {{ user.course }}
-                    </div>
-                    <div class="detail4">
-                    DOB: {{ user.dob.strftime("%d/%m/%Y") }}
-                    </div>
-                    <div class="detail5">
-                    State of Origin: {{ user.state_of_origin }}
-                    </div>
-                    <div class="detail6">
-                    Expiry Date: 12/01/2024
-                    </div>
-                    <div class="reg-number">
-                    {{ user.user_id }}
+        <div class="content card-content">
+            <div class="pure-g">
+                <div class="pure-u-1">
+                    <div class="id-front">
+                        <svg
+                            class="front-frame"
+                            width="322"
+                            height="520"
+                            viewBox="0 0 322 520"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path opacity="0.8" d="M0 0L321.972 0V519.448H0L0 0Z" fill="#0B0B0B" />
+                        </svg>
+                        
+                        <div class="school-name">Ahmadu Bello University</div>
+                        <div class="location">Zaria-Nigeria</div>
+                        <img class="id-photo" src="{{ url_for('static', filename='img/profiles/{}.jpg'.format(user.user_id)) }}" />
+                        <svg
+                            class="qr"
+                            width="55"
+                            height="55"
+                            viewBox="0 0 55 55"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                        >
+                            <path
+                            d="M0.606079 0.773193H54.268V54.4351H0.606079V0.773193Z"
+                            fill="url(#pattern0)"
+                            />
+                            <defs>
+                            <pattern
+                                id="pattern0"
+                                patternContentUnits="objectBoundingBox"
+                                width="1"
+                                height="1"
+                            >
+                                <use xlink:href="#image0_3_6" transform="scale(0.02)" />
+                            </pattern>
+                            <image
+                                id="image0_3_6"
+                                width="50"
+                                height="50"
+                                xlink:href="{{ url_for('static', filename='img/qrs/{}.jpg'.format(user.user_id)) }}"
+                            />
+                            </defs>
+                        </svg>
+                        
+                        <img class="signature" src="{{ url_for('static', filename='img/signs/{}.jpg'.format(user.user_id)) }}" />
+                        <div class="sign-label">Signature</div>
+                        <div class="qr-label">Verify ID</div>
+                        <div class="id-details">
+                            <div class="detail">
+                            Fullname: {{ user.last_name }} {{ user.first_name }}
+                        </div>
+                            <div class="detail2">
+                            Department: {{ user.department }}
+                            </div>
+                            <div class="detail3">
+                            Course: {{ user.course }}
+                            </div>
+                            <div class="detail4">
+                            DOB: {{ user.dob.strftime("%d/%m/%Y") }}
+                            </div>
+                            <div class="detail5">
+                            State of Origin: {{ user.state_of_origin }}
+                            </div>
+                            <div class="detail6">
+                            Expiry Date: 12/01/2024
+                            </div>
+                            <div class="reg-number">
+                            {{ user.user_id }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </body>
 </html>

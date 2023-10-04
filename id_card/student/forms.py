@@ -6,7 +6,8 @@ from wtforms.fields import (
     EmailField,
     TelField,
     SubmitField,
-    DateField
+    DateField,
+    TextAreaField
 )
 from wtforms.validators import Email
 
@@ -37,7 +38,7 @@ class Registration(FlaskForm):
     number = TelField(label="Number", render_kw={
         'placeholder': 'Number'
     })
-    address = StringField(label="Address", render_kw={
+    address = TextAreaField(label="Address", render_kw={
         'placeholder': 'Address'
     })
     state_of_origin = SelectField(label="State of Origin", choices=[
@@ -85,7 +86,7 @@ class Registration(FlaskForm):
     nok_fullname = StringField(label='Next of Kin', render_kw={
         'placeholder': 'Fullname'
     })
-    nok_address = StringField(label='Address', render_kw={
+    nok_address = TextAreaField(label='Address', render_kw={
         'placeholder': 'Address'
     })
     nok_number = TelField(label='Contact Phone', render_kw={

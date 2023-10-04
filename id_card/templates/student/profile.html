@@ -4,93 +4,98 @@
 
 {% block content %}
 
-    <!-- MAIN CONTENT -->
-    <!-- ONLY ALLOW AUTHENTICATED USERS -->
+<div id="main">
+    <div class="header">
+        <h1>Student Biodata</h1>
+    </div>
 
-    <h2>Student Biodata</h2>
-
-    <hr>
-    <form method="post" enctype="multipart/form-data">
+    <div class="content">
         <!-- FLASH MESSAGES -->
         {% for category, msg in get_flashed_messages(with_categories=True) %}
         <div class="flash">
             <span class="{{ category }}">{{ msg }}</span>
         </div>
         {% endfor %}
-        {{ form.hidden_tag() }}
-
-        <div class="row">
-            <div class="four columns">
-                {{ form.first_name.label }}
-                {{ form.first_name() }}
-            </div>
-            <div class="four columns">
-                {{ form.middle_name.label }}
-                {{ form.middle_name() }}
-            </div>
-            <div class="four columns">
-                {{ form.last_name.label }}
-                {{ form.last_name() }}
-            </div>
-        </div>
+        <form method="post" enctype="multipart/form-data" class="pure-form pure-form-stacked">
+            {{ form.hidden_tag() }}
     
-        <div class="row">
-            <div class="four columns">
-                {{ form.user_id.label }}
-                {{ form.user_id() }}
+            <div class="row">
+                <div class="four columns">
+                    {{ form.first_name.label }}
+                    {{ form.first_name() }}
+                </div>
+                <div class="four columns">
+                    {{ form.middle_name.label }}
+                    {{ form.middle_name() }}
+                </div>
+                <div class="four columns">
+                    {{ form.last_name.label }}
+                    {{ form.last_name() }}
+                </div>
             </div>
-            <div class="four columns">
-                {{ form.number.label }}
-                {{ form.number() }}
-            </div>
-            <div class="four columns">
-                {{ form.dob.label }}
-                {{ form.dob() }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="four columns">
-                {{ form.state_of_origin.label }}
-                {{ form.state_of_origin() }}
-            </div>
-            <div class="four columns">
-                {{ form.email.label }}
-                {{ form.email(class='u-full-width') }}
-            </div>
-        </div>
-
-        <div class="row">
-            <span class="info">*Each file must not exceed 1MB</span>
-            <div class="four columns">
-                {{ form.signature.label }}
-                {{ form.signature() }}
-            </div>
-            <div class="four columns">
-                {{ form.photo.label }}
-                {{ form.photo() }}
-            </div>
-        </div>
         
-        <h2>Next of Kin Information</h2>
-        <hr>
-        <div class="row">
-            <div class="four columns">
-                {{ form.nok_fullname.label }}
-                {{ form.nok_fullname(class='u-full-width') }}
+            <div class="row">
+                <div class="four columns">
+                    {{ form.user_id.label }}
+                    {{ form.user_id() }}
+                </div>
+                <div class="four columns">
+                    {{ form.number.label }}
+                    {{ form.number() }}
+                </div>
+                <div class="four columns">
+                    {{ form.dob.label }}
+                    {{ form.dob() }}
+                </div>
             </div>
-            <div class="four columns">
-                {{ form.nok_address.label }}
-                {{ form.nok_address() }}
+    
+            <div class="row">
+                <div class="four columns">
+                    {{ form.state_of_origin.label }}
+                    {{ form.state_of_origin() }}
+                </div>
+                <div class="four columns">
+                    {{ form.email.label }}
+                    {{ form.email(class='u-full-width') }}
+                </div>
             </div>
-            <div class="four columns">
-                {{ form.nok_number.label }}
-                {{ form.nok_number() }}
+    
+            <div class="row">
+                <span class="info">*Each file must not exceed 1MB</span>
+                <div class="four columns">
+                    {{ form.signature.label }}
+                    {{ form.signature() }}
+                </div>
+                <div class="four columns">
+                    {{ form.photo.label }}
+                    {{ form.photo() }}
+                </div>
             </div>
-        </div>
+            
+            <h2>Next of Kin Information</h2>
+            <hr>
+            <div class="row">
+                <div class="five columns">
+                    {{ form.nok_fullname.label }}
+                    {{ form.nok_fullname(class='u-full-width') }}
+                </div>
+                <div class="five columns">
+                    {{ form.nok_number.label }}
+                    {{ form.nok_number(class='u-full-width') }}
+                </div>
+            </div>
 
-        <div class="center-this submit">
-            {{ form.save(class='button-primary') }}
-        </div>
-    </form>
+            <div class="row">
+                <div class="column">
+                    {{ form.nok_address.label }}
+                    {{ form.nok_address(class='u-full-width') }}
+                </div>
+            </div>
+    
+            <div class="center-this submit">
+                {{ form.save(class='button-primary') }}
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

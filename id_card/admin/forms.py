@@ -35,6 +35,11 @@ class EditStudent(FlaskForm):
     address = StringField(label="Address", render_kw={
         'placeholder': 'Address'
     })
+    rusticated = BooleanField()
+    dob = DateField(label='Date of Birth')
+    is_active = BooleanField()
+    save = SubmitField(label='Save Changes')
+    
     state_of_origin = SelectField(label="State of Origin", choices=[
         'Abia',
         'Adamawa',
@@ -74,7 +79,3 @@ class EditStudent(FlaskForm):
         'Zamfara',
         'F.C.T. Abuja'
     ])
-    rusticated = BooleanField()
-    dob = DateField(label='Date of Birth')
-    is_active = BooleanField()
-    save = SubmitField(label='Save Changes')
