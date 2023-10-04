@@ -82,7 +82,6 @@ def edit_student(id):
         # user active or rusticated
         user.is_active = form.is_active.data
         user.rusticated = form.rusticated.data
-        user.is_active = False
         db.session.commit()
         flash('Changes applied', 'success')
         return redirect(url_for('.students'))
