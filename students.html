@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}All Students{% endblock %}
+
+{% block content %}
+
+<div id="main">        
+    <div class="header">
+        <h1>Students</h1>
+    </div>
+
+    <div class="content">
+        <!-- FLASH MESSAGES -->
+        {% for category, msg in get_flashed_messages(with_categories=True) %}
+        <div class="flash">
+            <span class="{{ category }}">{{ msg }}</span>
+        </div>
+        {% endfor %}
+        <div class="pure-menu pure-menu-horizontal">
+            <span class="pure-menu-heading">Filter by Department</span>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                    <a href="#" id="menuLink1" class="pure-menu-link">{{ dep }}</a>
+                    <ul class="pure-menu-children">
+                        <li class="pure-menu-item">
+                            <a href="{{ url_for('.filtered_students', dep=dep) }}" class="pure-menu-link">All</a>
+                        </li>
+                        {% for dep in deps %}
+                        <li class="pure-menu-item">
+                            <a href="{{ url_for('.filtered_students', dep=dep) }}" class="pure-menu-link">{{ dep }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    
+        <div class="">
+            <input type="text" onkeyup="search()" placeholder="Search for student by reg number" id="searchBtn" style="min-width: 250px;">
+        </div>
+    
+        <a class="button info" href="{{ url_for('.refresh') }}">Refresh</a>
+    
+        <table class="custom-table">
+            <caption>All Students</caption>
+            <thead>
+                <tr>
+                    <th>Reg Number</th>
+                    <th>Fullname</th>
+                    <th>Department</th>
+                    <th>ID Ready</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for st in students %}
+                <tr class="{{st.user_id}}">
+                    <td>{{ st.user_id }}</td>
+                    <td>
+                        {{ st.first_name }} 
+                        {% if st.middle_name != '' %}
+                        {{ st.middle_name }} 
+                        {% endif %}
+                        {{ st.last_name }}
+                    </td>
+                    <td>{{ st.department }}</td>
+                    {% if st.id_ready %}
+                    <td>✔</td>
+                    {% else %}
+                    <td>❌</td>
+                    {% endif %}
+                    {% if st.is_active %}
+                    <td>✔</td>
+                    {% else %}
+                    <td>❌</td>
+                    {% endif %}
+                    <td><a href="{{ url_for('.edit_student', id=st.id) }}" class="button button-primary">Edit</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
