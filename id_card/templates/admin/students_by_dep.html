@@ -20,8 +20,11 @@
             <span class="pure-menu-heading">Filter by Department</span>
             <ul class="pure-menu-list">
                 <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-                    <a href="{{ url_for('.students') }}" id="menuLink1" class="pure-menu-link">All</a>
+                    <a href="#" id="menuLink1" class="pure-menu-link">{{ dep }}</a>
                     <ul class="pure-menu-children">
+                        <li class="pure-menu-item">
+                            <a href="{{ url_for('.students') }}" class="pure-menu-link">All</a>
+                        </li>
                         {% for dep in deps %}
                         <li class="pure-menu-item">
                             <a href="{{ url_for('.filtered_students', dep=dep) }}" class="pure-menu-link">{{ dep }}</a>
